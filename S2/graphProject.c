@@ -1,59 +1,55 @@
-#include "raylib.h"
 
-int main(void)
+#include "graphLevel1.h"
+
+Graph *structReadFirstGraph()
 {
-    InitWindow(600, 400, "GraphProject");
+    Graph *myGraph = (Graph*)malloc(sizeof(Graph));
 
-    while (!WindowShouldClose())
+    FILE *myFile = fopen("graphTPpt1.txt", "r");
+    int iTopI = 0;
+    int iTopJ = 0;
+    int iType = 0;
+
+    if ( myFile == NULL )
     {
-        BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-            DrawRectangle(0, 75, 190, 40,BLACK);
-            DrawRectangle(60, 100, 40, 180,BLACK);
-            DrawRectangle(250, 75, 210, 40,BLACK);
-            DrawRectangle(530, 75, 40, 210,BLACK);
-            DrawRectangle(0, 330, 100, 40,BLACK);
-            DrawRectangle(150, 330, 310, 40,BLACK);
-            DrawRectangle(530, 330, 40, 40,BLACK);
-            DrawRectangle(420, 240, 40, 40,BLACK);
-            DrawRectangle(340, 240, 40, 40,BLACK);
-            DrawRectangle(250, 170, 40, 110,BLACK);
-            DrawRectangle(150, 170, 40, 110,BLACK);
-            DrawRectangle(250, 170, 210, 40,BLACK);
-
-
-            DrawText("IN", 25, 25, 20, RED);
-            DrawText("10", 330, 25, 20, BLACK);
-            DrawText("5", 210, 90, 20, BLACK);
-            DrawText("5", 500, 90, 20, BLACK);
-            DrawText("2", 500, 170, 20, BLACK);
-            DrawText("15", 500, 250, 20, BLACK);
-            DrawText("5", 500, 350, 20, BLACK);
-            DrawText("2", 120, 350, 20, BLACK);
-            DrawText("5", 60, 380, 20, BLACK);
-            DrawText("15", 260, 380, 20, BLACK);
-            DrawText("15", 25, 230, 20, BLACK);
-            DrawText("7", 585, 350, 20, BLACK);
-            DrawText("20", 575, 130, 20, BLACK);
-            DrawText("20", 330, 130, 20, BLACK);
-            DrawText("15", 120, 250, 20, BLACK);
-            DrawText("10", 160, 300, 20, BLACK);
-            DrawText("10", 260, 300, 20, BLACK);
-            DrawText("10", 345, 300, 20, BLACK);
-            DrawText("14", 430, 300, 20, BLACK);
-            DrawText("OUT", 480, 300, 20, RED);
-            DrawText("2", 550, 300, 20, BLACK);
-            DrawText("30", 210, 220, 20, BLACK);
-            DrawText("5", 345, 220, 20, BLACK);
-            DrawText("10", 430, 220, 20, BLACK);
-            DrawText("12", 390, 250, 20, BLACK);
-
-            //DrawCircle()
-        EndDrawing();
+        exit(EXIT_FAILURE);
     }
 
-    CloseWindow();
+    fscanf(myFile, "%d", &myGraph->vertex);
+    printf("%d\n", myGraph->vertex);
+    myGraph->adjency = (Monster**)malloc(myGraph->vertex * sizeof(Monster*));
 
-    return 0;
+    for ( int i = 0; i < myGraph->vertex + 1; i++)
+    {
+        myGraph->adjency[i] = (Monster*)malloc(myGraph->vertex * sizeof(Monster));
+
+        for ( int j = 0; j < myGraph->vertex + 1; j++)
+        {
+            myGraph->adjency[i][j].monsterType = 0;
+        }
+    }
+
+    while( fscanf(myFile,"%d %d %d", &iTopI,&iTopJ,&iType) == 3)
+    {
+        myGraph->adjency[iTopI][iTopJ].monsterType = iType;
+        myGraph->adjency[iTopI][iTopJ].vertex = iTopI;
+    }
+
+    fclose(myFile);
+    
+    return myGraph;
+}
+
+
+void showAdjencyMatrix( int vertex, int **myGraph)
+{
+    printf("-----------------  MATRIX  ----------------\n");
+    for ( int i = 1; i <= vertex; i++)
+    {
+        for ( int j = 1; j <= vertex; j++)
+        {
+            printf("%d ", myGraph[i][j]);
+        }
+        printf("\n");
+    }
 }
