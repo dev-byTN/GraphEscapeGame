@@ -10,18 +10,22 @@ typedef struct Monster Monster;
 typedef struct GraphMonster GraphMonster;
 typedef struct ListMonster ListMonster;
 
+enum MonsterType {
+    ZOMBIE, VAMPIRE
+};
+
 
 struct GraphMonster
 {
+    int **adjency;
+    ListMonster* listMonster;
     //int nextvertex;
-    Monster* monsterType; //weight
-    
+
 };
 
 struct Monster
 {
-    int **adjency;
-    int monsterType;
+    enum MonsterType monsterType; //weight
     int nextvertex;
     Monster* next;
 };

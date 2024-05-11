@@ -44,6 +44,11 @@ set(ALL_FILES
     ${Header_Files}
     ${Resource_Files}
     ${Source_Files}
+        ../S2/mainLevel1.c
+        ../S2/graph.h
+        ../S2/graph.h
+        ../S2/graph.c
+        ../S2/dijkstra.c
 )
 
 
