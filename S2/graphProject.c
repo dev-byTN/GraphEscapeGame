@@ -18,13 +18,17 @@ ListMonster* newListVertex ()
 int addVertex(ListMonster* list, int vertex) 
 {
     Monster* vertexTemp = (Monster*)malloc(sizeof(Monster));
-    if (vertexTemp != NULL) 
+    
+    if (newMonster == NULL || list == NULL) 
     {
-        vertexTemp->nextvertex = vertex;
-        vertexTemp->next = list->head;
-        list->head = vertexTemp;
-        list->nbVertex +=1;
+        exit(EXIT_FAILURE);
     }
+
+    newMonster->nextvertex = vertex;
+    newMonster->next = list->head;
+    newMonster->monsterType = type;
+    list->head = newMonster;
+    list->nbVertex +=1;
 
     return 0;
 }
@@ -108,7 +112,7 @@ ListMonster** creationListMonster(Monster* myGraph)
         {
             if (myGraph->adjency[i][j] != 0) 
             {
-                addVertex(list[i], j);
+                addVertex(list[i], j, myGraph->adjency[î][j]);
             }
         }
     }
