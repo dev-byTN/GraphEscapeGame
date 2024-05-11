@@ -26,6 +26,7 @@ typedef struct Arc {
 typedef struct Graphe {
     int order;
     int nbArcs;
+    int **adjency;
     Arc *arcs;
 } Graphe;
 
