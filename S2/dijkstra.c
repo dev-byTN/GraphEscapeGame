@@ -22,9 +22,10 @@ void printParentPath(int parent[], int i) {
     printf("%d ", i + 1);
 }
 void dijkstra(Graphe* graph, int source) {
-    int distance[graph->order];
-    bool visited[graph->order];
-    int parent[graph->order];
+    int* distance = malloc(graph->order * sizeof(int));
+    bool* visited = malloc(graph->order * sizeof(bool));
+    int* parent = malloc(graph->order * sizeof(int));
+
     for (int i = 0; i < graph->order; i++) {
         parent[0] = -1;
         distance[i] = INT_MAX;

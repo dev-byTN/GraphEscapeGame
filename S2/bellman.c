@@ -3,61 +3,76 @@
 #include <limits.h>
 #include "graph.h"
 
-void printArr(int dist[], int n)
-{
-    printf("Vertex   Distance from Source\n");
-    for (int i = 1; i < n; ++i)
-        printf("%d \t\t %d\n", i, dist[i]);
+void display(int arr[], int size) {
+    int i;
+    for (i = 1; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
 }
 
-// The main function that finds shortest distances from src
-// to all other vertices using Bellman-Ford algorithm.  The
-// function also detects negative weight cycle
-void BellmanFord(Graphe* graph, int src)
-{
-    int V = graph->order;
-    int E = graph->nbArcs;
-    int* dist = malloc(V * sizeof(int));
+void BellmanFord(Graphe *graph, int source) {
+    //variables
+    int i, j, u, v, w;
 
-    // Step 1: Initialize distances from src to all other
-    // vertices as INFINITE
-    for (int i = 0; i < V; i++) {
-        dist[i] = INT_MAX;
+    //total vertex in the graph g
+    int tV = graph->order;
+
+    //total edge in the graph g
+    int tE = graph->nbArcs;
+
+    //distance array
+    //size equal to the number of vertices of the graph g
+    int* d = malloc((tV) * sizeof(int));
+
+    //predecessor array
+    //size equal to the number of vertices of the graph g
+    int* p = malloc((tV) * sizeof(int));
+
+    //step 1: fill the distance array and predecessor array
+    for (i = 0; i < tV; i++) {
+        d[i] = INT_MAX;
+        p[i] = 0;
     }
-    dist[src] = 0;
 
-    // Step 2: Relax all edges |V| - 1 times. A simple
-    // shortest path from src to any other vertex can have
-    // at-most |V| - 1 edges
-    for (int i = 1; i <= V - 1; i++) {
-        for (int j = 0; j < E; j++) {
-            int u = graph->arcs[j].sommet1;
-            int v = graph->arcs[j].sommet2;
-            int weight = graph->arcs[j].weight;
+    //mark the source vertex
+    d[source] = 0;
 
+    //step 2: relax edges |V| - 1 times
+    for (i = 1; i <= tV - 1; i++) {
+        for (j = 0; j < tE; j++) {
+            //get the edge data
+            u = graph->arcs[j].sommet1;
+            v = graph->arcs[j].sommet2;
+            w = graph->arcs[j].weight;
 
-            if (dist[u] != INT_MAX && (dist[u] + weight < dist[v])) {
-                dist[v] = dist[u] + weight;
+            if (d[u] != INT_MAX && d[v] > d[u] + w) {
+                d[v] = d[u] + w;
+              /*  printf("w = %d, ", w);
+                printf("d[%d] = %d, ", u, d[u]);
+                printf("d[%d] = %d\n", v, d[v]);*/
+                p[v] = u;
             }
         }
     }
 
-    // Step 3: check for negative-weight cycles.  The above
-    // step guarantees shortest distances if graph doesn't
-    // contain negative weight cycle.  If we get a shorter
-    // path, then there is a cycle.
-    for (int i = 0; i < E; i++) {
-        int u = graph->arcs[i].sommet1;
-        int v = graph->arcs[i].sommet2;
-        int weight = graph->arcs[i].weight;
-        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            printf("Graph contains negative weight cycle");
-            return; // If negative cycle is detected, simply
-            // return
+    //step 3: detect negative cycle
+    //if value changes then we have a negative cycle in the graph
+    //and we cannot find the shortest distances
+    for (i = 0; i < tE; i++) {
+        u = graph->arcs[i].sommet1;
+        v = graph->arcs[i].sommet2;
+        w = graph->arcs[i].weight;
+        if (d[u] != INT_MAX && d[v] > d[u] + w) {
+            printf("Negative weight cycle detected!\n");
+            return;
         }
     }
 
-    printArr(dist, V);
-
-    return;
+    //No negative weight cycle found!
+    //print the distance and predecessor array
+    printf("Distance array: ");
+    display(d, tV);
+    printf("Predecessor array: ");
+    display(p, tV);
 }

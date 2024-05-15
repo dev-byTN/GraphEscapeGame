@@ -22,7 +22,7 @@ int **getWeightedAdjency(Graphe *graphe) {
 
     for (int i = 0; i < graphe->nbArcs; ++i) {
         Arc arc = graphe->arcs[i];
-        adjacence[arc.sommet1 - 1][arc.sommet2 - 1] = arc.weight;
+        adjacence[arc.sommet1][arc.sommet2] = arc.weight;
     }
     return adjacence;
 }
@@ -43,8 +43,8 @@ Graphe *lectureGraphe(FILE *file) {
     while (fscanf(file, "%d %d %d", &buffer[0], &buffer[1], &buffer[2]) != EOF) {
         // printf("Arc: %d -> %d\n", buffer[0], buffer[1]);
         Arc *arc = malloc(sizeof(Arc));
-        arc->sommet1 = buffer[0];
-        arc->sommet2 = buffer[1];
+        arc->sommet1 = buffer[0] - 1;
+        arc->sommet2 = buffer[1] - 1;
         arc->weight = buffer[2];
 
         graphe->arcs[graphe->nbArcs] = *arc;
@@ -56,8 +56,8 @@ Graphe *lectureGraphe(FILE *file) {
     return graphe;
 }
 
-ListSuccessor **getSuccessorList(Graphe* graph) {
-    ListSuccessor **successors = malloc(graph->order * sizeof(ListSuccessor * ));
+ListSuccessor **getSuccessorList(Graphe *graph) {
+    ListSuccessor **successors = malloc(graph->order * sizeof(ListSuccessor *));
 
     for (int i = 0; i < graph->order; i++) {
         successors[i] = createList();
@@ -77,7 +77,7 @@ ListSuccessor **getSuccessorList(Graphe* graph) {
     return successors;
 }
 
-void afficheMatrice(Graphe* graph) {
+void afficheMatrice(Graphe *graph) {
     for (int i = 0; i < graph->order; i++) {
         for (int j = 0; j < graph->order; j++) {
             printf("%d ", graph->adjency[i][j]);
@@ -103,14 +103,14 @@ int main() {
     FILE *file = fopen("monsterLevel1.txt", "r");
     Graphe *graphe = lectureGraphe(file);
     printf("Matrice d'adjacence: \n");
-    afficheMatrice(graphe);
+    //afficheMatrice(graphe);
 
     printf("\n Successeurs: \n");
     ListSuccessor **successors = getSuccessorList(graphe);
     //afficheSuccessors(graphe->order, successors);
 
     dijkstra(graphe, 0);
-    BellmanFord(graphe, 1);
+    BellmanFord(graphe, 0);
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);
