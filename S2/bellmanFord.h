@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define NB_EDGE 45
-#define NB_MONSTER 16
-
-
 typedef struct Arcs Arcs;
 typedef struct Graph Graph;
 
@@ -19,6 +15,8 @@ struct Arcs
 struct Graph 
 {
   Arcs *arrayArcs;  
+  int V;
+  int E;
 };
 
 
