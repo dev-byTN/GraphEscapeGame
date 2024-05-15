@@ -1,27 +1,30 @@
 #include "bellmanFord.h"
 
 
-int bellmanford(int source, Graph *monster) 
+int bellmanford(Graph *monster, int start, int end)   
 {
     int u, v, w;
+    int tv = monster->V;
+    int te = monster->E;
+    int count = 0;
 
-    int distance[NB_MONSTER];
-    int predecessor[NB_EDGE];
+    int distance[tv];
+    int predecessor[tv];
 
-    for (int i = 0; i < NB_MONSTER; i++) 
+    for (int i = 0; i < tv; i++) 
     {
         distance[i] = INT_MAX;
         predecessor[i] = 0;
     }
-    distance[source] = 0;
+    distance[start] = 0;
 
-    for (int i = 1; i <= NB_MONSTER - 1; i++) 
+    for (int i = 1; i <= tv - 1; i++) 
     {
-        for (int j = 0; j < NB_EDGE; j++) 
+        for (int j = 0; j < te; j++) 
         {
-            u = monster->arr[i].u; // SOMMET DE DÉPART
-            v = monster->adjency[i][j].v; // SOMMET D'ARRIVÉ
-            w = myGraph->adjecny[i][j].w; // POIDS
+            u = monster->arrayArcs[j].u; // SOMMET DE DÉPART
+            v = monster->arrayArcs[j].v; // SOMMET D'ARRIVÉ
+            w = monster->arrayArcs[j].w; // POIDS
 
             if (distance[u] != INT_MAX && (distance[v] > distance[u] + w)) 
             {
@@ -31,7 +34,7 @@ int bellmanford(int source, Graph *monster)
         }
     }
 
-    return distance;
+    return distance[end];
 }
 
 
