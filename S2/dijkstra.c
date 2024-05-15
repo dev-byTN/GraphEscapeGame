@@ -21,29 +21,29 @@ void printParentPath(int parent[], int i) {
     printParentPath(parent, parent[i]);
     printf("%d ", i + 1);
 }
-void dijkstra(int** graph, int graphSize, int source) {
-    int distance[graphSize];
-    bool visited[graphSize];
-    int parent[graphSize];
-    for (int i = 0; i < graphSize; i++) {
+void dijkstra(Graphe* graph, int source) {
+    int distance[graph->order];
+    bool visited[graph->order];
+    int parent[graph->order];
+    for (int i = 0; i < graph->order; i++) {
         parent[0] = -1;
         distance[i] = INT_MAX;
         visited[i] = false;
     }
     distance[source] = 0;
-    for (int i = 0; i < graphSize - 1; i++) {
-        int U = minimumDistance(distance, visited, graphSize);
+    for (int i = 0; i < graph->order - 1; i++) {
+        int U = minimumDistance(distance, visited, graph->order);
         visited[U] = true;
-        for (int j = 0; j < graphSize; j++) {
-            int curr_distance = distance[U] + graph[U][j];
-            if (!visited[j] && graph[U][j] && curr_distance < distance[j]) {
+        for (int j = 0; j < graph->order; j++) {
+            int curr_distance = distance[U] + graph->adjency[U][j];
+            if (!visited[j] && graph->adjency[U][j] && curr_distance < distance[j]) {
                 parent[j] = U;
                 distance[j] = curr_distance;
             }
         }
     }
     printf("Vertex\t\tDistance\tPath\n");
-    for (int i = 1; i < graphSize; i++) {
+    for (int i = 1; i < graph->order; i++) {
         printf("%d->%d\t\t%d\t\t%d ", source + 1, i + 1, distance[i], source + 1);
         printParentPath(parent, i);
         printf("\n");

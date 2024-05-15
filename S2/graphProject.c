@@ -5,7 +5,7 @@
 #include "graph.h"
 #include "dijkstra.h"
 
-int **getWeightedAdjacence(Graphe *graphe) {
+int **getWeightedAdjency(Graphe *graphe) {
     int **adjacence = malloc(graphe->order * sizeof(int *));
 
 
@@ -50,22 +50,23 @@ Graphe *lectureGraphe(FILE *file) {
         graphe->arcs[graphe->nbArcs] = *arc;
         graphe->nbArcs++;
     }
+    graphe->adjency = getWeightedAdjency(graphe);
 
     fclose(file);
     return graphe;
 }
 
-ListSuccessor **getSuccessorList(int **adjacence, int order) {
-    ListSuccessor **successors = malloc(order * sizeof(ListSuccessor * ));
+ListSuccessor **getSuccessorList(Graphe* graph) {
+    ListSuccessor **successors = malloc(graph->order * sizeof(ListSuccessor * ));
 
-    for (int i = 0; i < order; i++) {
+    for (int i = 0; i < graph->order; i++) {
         successors[i] = createList();
     }
 
-    for (int i = 0; i < order; i++) {
-        for (int j = 0; j < order; j++) {
+    for (int i = 0; i < graph->order; i++) {
+        for (int j = 0; j < graph->order; j++) {
 
-            if (adjacence[i][j] != 0) {
+            if (graph->adjency[i][j] != 0) {
                 Successor *successor = malloc(sizeof(Successor));
                 successor->sommet = j;
                 successor->nextSuccessor = NULL;
@@ -76,10 +77,10 @@ ListSuccessor **getSuccessorList(int **adjacence, int order) {
     return successors;
 }
 
-void afficheMatrice(int ordre, int **adjacence) {
-    for (int i = 0; i < ordre; i++) {
-        for (int j = 0; j < ordre; j++) {
-            printf("%d ", adjacence[i][j]);
+void afficheMatrice(Graphe* graph) {
+    for (int i = 0; i < graph->order; i++) {
+        for (int j = 0; j < graph->order; j++) {
+            printf("%d ", graph->adjency[i][j]);
         }
         printf("\n");
     }
@@ -101,15 +102,15 @@ void afficheSuccessors(int order, ListSuccessor **successors) {
 int main() {
     FILE *file = fopen("monsterLevel1.txt", "r");
     Graphe *graphe = lectureGraphe(file);
-    int **weightedAdjacence = getWeightedAdjacence(graphe);
     printf("Matrice d'adjacence: \n");
-    afficheMatrice(graphe->order, weightedAdjacence);
+    afficheMatrice(graphe);
 
     printf("\n Successeurs: \n");
-    ListSuccessor **successors = getSuccessorList(weightedAdjacence, graphe->order);
+    ListSuccessor **successors = getSuccessorList(graphe);
     //afficheSuccessors(graphe->order, successors);
 
-    dijkstra(weightedAdjacence, graphe->order, 0);
+    dijkstra(graphe, 0);
+    BellmanFord(graphe, 1);
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);
@@ -120,11 +121,11 @@ int main() {
     printf("\n Nombre de chemins de longueur 2: %d\n", nbchemin2(graphe->order, adjacence));*/
 
     for (int i = 0; i < graphe->order; ++i) {
-        free(weightedAdjacence[i]);
+        free(graphe->adjency[i]);
         freeList(successors[i]);
     }
 
-    free(weightedAdjacence);
+    free(graphe->adjency);
     free(graphe);
     free(successors);
     return 0;

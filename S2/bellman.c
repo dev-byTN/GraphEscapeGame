@@ -1,37 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 #include "graph.h"
 
-void bellmanford(int source, Monster *monster) 
+void printArr(int dist[], int n)
 {
-    int u, v, w;
+    printf("Vertex   Distance from Source\n");
+    for (int i = 1; i < n; ++i)
+        printf("%d \t\t %d\n", i, dist[i]);
+}
 
-    int distance[NB_MONSTER];
-    int predecessor[NB_EDGE];
+// The main function that finds shortest distances from src
+// to all other vertices using Bellman-Ford algorithm.  The
+// function also detects negative weight cycle
+void BellmanFord(Graphe* graph, int src)
+{
+    int V = graph->order;
+    int E = graph->nbArcs;
+    int* dist = malloc(V * sizeof(int));
 
-    for (int i = 0; i < NB_MONSTER; i++) 
-    {
-        distance[i] = INT_MAX;
-        predecessor[i] = 0;
+    // Step 1: Initialize distances from src to all other
+    // vertices as INFINITE
+    for (int i = 0; i < V; i++) {
+        dist[i] = INT_MAX;
     }
-    distance[source] = 0;
+    dist[src] = 0;
 
-    for (int i = 1; i <= NB_MONSTER - 1; i++) 
-    {
-        for (int j = 0; j < NB_EDGE; j++) 
-        {
-            u = monster->adjency[i][j].u; // SOMMET DE DÉPART
-            v = monster->adjency[i][j].v; // SOMMET D'ARRIVÉ
-            w = myGraph->adjecny[i][j].w; // POIDS
+    // Step 2: Relax all edges |V| - 1 times. A simple
+    // shortest path from src to any other vertex can have
+    // at-most |V| - 1 edges
+    for (int i = 1; i <= V - 1; i++) {
+        for (int j = 0; j < E; j++) {
+            int u = graph->arcs[j].sommet1;
+            int v = graph->arcs[j].sommet2;
+            int weight = graph->arcs[j].weight;
 
-            if (distance[u] != INT_MAX && (distance[v] > distance[u] + w)) 
-            {
-                distance[v] = distance[u] + w;
-                predecessor[v] = u;
+
+            if (dist[u] != INT_MAX && (dist[u] + weight < dist[v])) {
+                dist[v] = dist[u] + weight;
             }
         }
     }
 
-    printf("Distance array: ");
-    display(distance, NB_MONSTER);
-    printf("Predecessor array: ");
-    display(predecessor, NB_MONSTER);
+    // Step 3: check for negative-weight cycles.  The above
+    // step guarantees shortest distances if graph doesn't
+    // contain negative weight cycle.  If we get a shorter
+    // path, then there is a cycle.
+    for (int i = 0; i < E; i++) {
+        int u = graph->arcs[i].sommet1;
+        int v = graph->arcs[i].sommet2;
+        int weight = graph->arcs[i].weight;
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+            printf("Graph contains negative weight cycle");
+            return; // If negative cycle is detected, simply
+            // return
+        }
+    }
+
+    printArr(dist, V);
+
+    return;
 }
