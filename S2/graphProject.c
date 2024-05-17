@@ -46,6 +46,7 @@ Graphe *lectureGraphe(FILE *file) {
         arc->sommet1 = buffer[0] - 1;
         arc->sommet2 = buffer[1] - 1;
         arc->weight = buffer[2];
+        arc->color = -1;
 
         graphe->arcs[graphe->nbArcs] = *arc;
         graphe->nbArcs++;
@@ -111,6 +112,8 @@ int main() {
 
     dijkstra(graphe, 0);
     BellmanFord(graphe, 0);
+
+    edgeColoration(graphe, 0);
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);

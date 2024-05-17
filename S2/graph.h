@@ -21,6 +21,7 @@ typedef struct Arc {
     int sommet1;
     int sommet2;
     int weight;
+    int color;
 } Arc;
 
 typedef struct Graphe {
