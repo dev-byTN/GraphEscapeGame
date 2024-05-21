@@ -49,6 +49,7 @@ set(ALL_FILES
         ../S2/graph.h
         ../S2/graph.c
         ../S2/dijkstra.c
+        ../S2/edgecoloration.c
 )
 
 

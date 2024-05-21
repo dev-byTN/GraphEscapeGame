@@ -38,10 +38,11 @@ Graphe *lectureGraphe(FILE *file) {
     Graphe *graphe = malloc(sizeof(Graphe));
     graphe->order = order;
     graphe->arcs = malloc(graphe->order * graphe->order * sizeof(Arc));
+    graphe->arcsList = createList();
+
+
     int *buffer = malloc(3 * sizeof(int));
     int id = 0;
-
-    ListSuccessor *listSuccessor = createList();
 
     while (fscanf(file, "%d %d %d", &buffer[0], &buffer[1], &buffer[2]) != EOF) {
         // printf("Arc: %d -> %d\n", buffer[0], buffer[1]);
@@ -52,10 +53,12 @@ Graphe *lectureGraphe(FILE *file) {
         arc->color = -1;
         arc->id = id;
 
+
         Successor *arcElement = malloc(sizeof(Successor));
         arcElement->element = arc;
+        arcElement->nextSuccessor = NULL;
 
-        insertElement(listSuccessor, arcElement);
+        insertElement(graphe->arcsList, arcElement);
         id++;
 
         graphe->arcs[graphe->nbArcs] = *arc;
@@ -79,7 +82,10 @@ ListSuccessor **getSuccessorList(Graphe *graph) {
 
             if (graph->adjency[i][j] != 0) {
                 Successor *successor = malloc(sizeof(Successor));
-                successor->element = j;
+                int *value = malloc(sizeof(int));
+                *value = j;
+
+                successor->element = value;
                 successor->nextSuccessor = NULL;
                 insertElement(successors[i], successor);
             }
@@ -102,10 +108,22 @@ void afficheSuccessors(int order, ListSuccessor **successors) {
         printf("Successeurs de %d: ", i + 1);
         Successor *successor = successors[i]->firstSuccessor;
         while (successor != NULL) {
-            printf("%d ", successor->element + 1);
+            int *value = successor->element;
+            printf("%d ", *value + 1);
             successor = successor->nextSuccessor;
         }
         printf("\n");
+    }
+}
+
+void resetEdges(Graphe *graph) {
+    ListSuccessor *arcsList = graph->arcsList;
+    Successor *currentArcList = arcsList->firstSuccessor;
+
+    while (currentArcList != NULL) {
+        Arc *arc = (Arc *) currentArcList->element;
+        arc->color = -1;
+        currentArcList = currentArcList->nextSuccessor;
     }
 }
 
@@ -123,7 +141,10 @@ int main() {
     /*dijkstra(graphe, 0);
     BellmanFord(graphe, 0);*/
 
-    edgeColoration(graphe, 0);
+    for (int i = 0; i < graphe->order; ++i) {
+        resetEdges(graphe);
+        printf("Colors used: %d\n", edgeColoration(graphe, i));
+    }
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);
