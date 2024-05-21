@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #ifndef GRAPH_H
 #define GRAPH_H
@@ -13,7 +14,7 @@ struct ListSuccessor {
 };
 
 struct Successor {
-    int sommet;
+    void* element;
     Successor *nextSuccessor;
 };
 
@@ -22,6 +23,7 @@ typedef struct Arc {
     int sommet2;
     int weight;
     int color;
+    int id;
 } Arc;
 
 typedef struct Graphe {
@@ -29,11 +31,13 @@ typedef struct Graphe {
     int nbArcs;
     int **adjency;
     Arc *arcs;
+    ListSuccessor *arcsList;
 } Graphe;
 
 ListSuccessor *createList();
 void insertHead(ListSuccessor *list, Successor *element);
 void insertElement(ListSuccessor *list, Successor *element);
+void removeElement(ListSuccessor *list, Successor *element);
 void freeList(ListSuccessor *list);
 
 #endif

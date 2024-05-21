@@ -28,6 +28,30 @@ void insertElement(ListSuccessor *list, Successor *element) {
     list->size++;
 }
 
+void removeElement(ListSuccessor *list, Successor *element) {
+    if (list->firstSuccessor == NULL) {
+        return;
+    }
+    Successor *actualElement = list->firstSuccessor;
+
+    if (actualElement == element) {
+        list->firstSuccessor = actualElement->nextSuccessor;
+        list->size--;
+        return;
+    }
+
+    while (actualElement->nextSuccessor != NULL) {
+        if (actualElement->nextSuccessor == element) {
+            actualElement->nextSuccessor = actualElement->nextSuccessor->nextSuccessor;
+            list->size--;
+            return;
+        }
+
+        actualElement = actualElement->nextSuccessor;
+    }
+}
+
+
 void freeList(ListSuccessor *list) {
     if (list == NULL) {
         return;

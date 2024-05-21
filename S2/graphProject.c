@@ -39,6 +39,9 @@ Graphe *lectureGraphe(FILE *file) {
     graphe->order = order;
     graphe->arcs = malloc(graphe->order * graphe->order * sizeof(Arc));
     int *buffer = malloc(3 * sizeof(int));
+    int id = 0;
+
+    ListSuccessor *listSuccessor = createList();
 
     while (fscanf(file, "%d %d %d", &buffer[0], &buffer[1], &buffer[2]) != EOF) {
         // printf("Arc: %d -> %d\n", buffer[0], buffer[1]);
@@ -47,6 +50,13 @@ Graphe *lectureGraphe(FILE *file) {
         arc->sommet2 = buffer[1] - 1;
         arc->weight = buffer[2];
         arc->color = -1;
+        arc->id = id;
+
+        Successor *arcElement = malloc(sizeof(Successor));
+        arcElement->element = arc;
+
+        insertElement(listSuccessor, arcElement);
+        id++;
 
         graphe->arcs[graphe->nbArcs] = *arc;
         graphe->nbArcs++;
@@ -69,7 +79,7 @@ ListSuccessor **getSuccessorList(Graphe *graph) {
 
             if (graph->adjency[i][j] != 0) {
                 Successor *successor = malloc(sizeof(Successor));
-                successor->sommet = j;
+                successor->element = j;
                 successor->nextSuccessor = NULL;
                 insertElement(successors[i], successor);
             }
@@ -92,7 +102,7 @@ void afficheSuccessors(int order, ListSuccessor **successors) {
         printf("Successeurs de %d: ", i + 1);
         Successor *successor = successors[i]->firstSuccessor;
         while (successor != NULL) {
-            printf("%d ", successor->sommet + 1);
+            printf("%d ", successor->element + 1);
             successor = successor->nextSuccessor;
         }
         printf("\n");
@@ -106,12 +116,12 @@ int main() {
     printf("Matrice d'adjacence: \n");
     //afficheMatrice(graphe);
 
-    printf("\n Successeurs: \n");
-    ListSuccessor **successors = getSuccessorList(graphe);
+    /*printf("\n Successeurs: \n");
+    ListSuccessor **successors = getSuccessorList(graphe);*/
     //afficheSuccessors(graphe->order, successors);
 
-    dijkstra(graphe, 0);
-    BellmanFord(graphe, 0);
+    /*dijkstra(graphe, 0);
+    BellmanFord(graphe, 0);*/
 
     edgeColoration(graphe, 0);
 
@@ -125,11 +135,10 @@ int main() {
 
     for (int i = 0; i < graphe->order; ++i) {
         free(graphe->adjency[i]);
-        freeList(successors[i]);
+        //freeList(successors[i]);
     }
 
     free(graphe->adjency);
     free(graphe);
-    free(successors);
     return 0;
 }
