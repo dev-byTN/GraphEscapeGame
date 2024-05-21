@@ -138,13 +138,13 @@ int main() {
     ListSuccessor **successors = getSuccessorList(graphe);*/
     //afficheSuccessors(graphe->order, successors);
 
-    /*dijkstra(graphe, 0);
-    BellmanFord(graphe, 0);*/
+    dijkstraMax(graphe, 0);
+    //BellmanFord(graphe, 0);
 
-    for (int i = 0; i < graphe->order; ++i) {
+  /*  for (int i = 0; i < graphe->order; ++i) {
         resetEdges(graphe);
         printf("Colors used: %d\n", edgeColoration(graphe, i));
-    }
+    }*/
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);

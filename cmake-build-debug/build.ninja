@@ -215,6 +215,14 @@ build GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/edgecoloration.c.obj: C_COMPI
   OBJECT_DIR = GraphViewer\CMakeFiles\GraphViewer.dir
   OBJECT_FILE_DIR = GraphViewer\CMakeFiles\GraphViewer.dir\__\S2
 
+build GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/bellman.c.obj: C_COMPILER__GraphViewer_unscanned_Debug C$:/Users/guill/CLionProjects/GraphEscapeGame/S2/bellman.c || cmake_object_order_depends_target_GraphViewer
+  DEFINES = -DASSETS_PATH=\"C:/Users/guill/CLionProjects/GraphEscapeGame/GraphViewer/assets/\" -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUNICODE -D_CONSOLE -D_CRT_SECURE_NO_WARNINGS -D_DEBUG -D_UNICODE
+  DEP_FILE = GraphViewer\CMakeFiles\GraphViewer.dir\__\S2\bellman.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/guill/CLionProjects/GraphEscapeGame/GraphViewer/../Raylib/src -IC:/Users/guill/CLionProjects/GraphEscapeGame/GraphViewer/files/include -IC:/Users/guill/CLionProjects/GraphEscapeGame/GraphViewer/json -IC:/Users/guill/CLionProjects/GraphEscapeGame/cmake-build-debug/_deps/raylib-src/src -IC:/Users/guill/CLionProjects/GraphEscapeGame/cmake-build-debug/_deps/raylib-src/src/external/glfw/include
+  OBJECT_DIR = GraphViewer\CMakeFiles\GraphViewer.dir
+  OBJECT_FILE_DIR = GraphViewer\CMakeFiles\GraphViewer.dir\__\S2
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target GraphViewer
@@ -223,7 +231,7 @@ build GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/edgecoloration.c.obj: C_COMPI
 #############################################
 # Link the executable C:\Users\guill\CLionProjects\GraphEscapeGame\out\bin\x64\Debug\GraphViewer.exe
 
-build C$:/Users/guill/CLionProjects/GraphEscapeGame/out/bin/x64/Debug/GraphViewer.exe: C_EXECUTABLE_LINKER__GraphViewer_Debug GraphViewer/CMakeFiles/GraphViewer.dir/files/src/display.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/files/src/graph.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/files/src/main.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/json/json.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/json/readJson.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/mainLevel1.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/graph.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/dijkstra.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/edgecoloration.c.obj | _deps/raylib-build/raylib/libraylib.a || _deps/raylib-build/raylib/external/glfw/src/glfw _deps/raylib-build/raylib/libraylib.a
+build C$:/Users/guill/CLionProjects/GraphEscapeGame/out/bin/x64/Debug/GraphViewer.exe: C_EXECUTABLE_LINKER__GraphViewer_Debug GraphViewer/CMakeFiles/GraphViewer.dir/files/src/display.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/files/src/graph.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/files/src/main.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/json/json.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/json/readJson.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/mainLevel1.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/graph.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/dijkstra.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/edgecoloration.c.obj GraphViewer/CMakeFiles/GraphViewer.dir/__/S2/bellman.c.obj | _deps/raylib-build/raylib/libraylib.a || _deps/raylib-build/raylib/external/glfw/src/glfw _deps/raylib-build/raylib/libraylib.a
   FLAGS = -g
   LINK_LIBRARIES = _deps/raylib-build/raylib/libraylib.a  -lopengl32  -lglu32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = GraphViewer\CMakeFiles\GraphViewer.dir

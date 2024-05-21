@@ -50,6 +50,8 @@ set(ALL_FILES
         ../S2/graph.c
         ../S2/dijkstra.c
         ../S2/edgecoloration.c
+        ../S2/bellman.c
+        ../S2/bellman.c
 )
 
 
