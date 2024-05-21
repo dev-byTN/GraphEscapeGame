@@ -8,29 +8,29 @@ void displayPredecessor(int tv, int predecessor[]){
 }
 
 
-int bellmanford2(Graph *monster, int start, int end)   
+int bellmanford2(Graph *graph, int start, int end)   
 {
     int u, v, w;
-    int tv = monster->V;
-    int te = monster->E;
+    int tV = graph->order;
+    int tE = graph->nbArcs;
 
-    int distance[tv];
-    int predecessor[tv];
+    int *distance = malloc((tV) * sizeof(int));
+    int *predecessor = malloc((tV) * sizeof(int));
 
-    for (int i = 0; i < tv; i++) 
+    for (int i = 0; i < tV; i++) 
     {
         distance[i] = INT_MIN;
         predecessor[i] = 0;
     }
     distance[start] = 0;
 
-    for (int i = 0; i < tv; i++) 
+    for (int i = 0; i < tV; i++) 
     {
-        for (int j = 0; j < tv; j++) 
+        for (int j = 0; j < tV; j++) 
         {
-            u = monster->arrayArcs[j].u; // SOMMET DE DÉPART
-            v = monster->arrayArcs[j].v; // SOMMET D'ARRIVÉ
-            w = monster->arrayArcs[j].w; // POIDS
+            u = graph->arcs[j].sommet1; 
+            v = graph->arcs[j].sommet2; 
+            w = graph->arcs[j].weight; 
 
             if (distance[u] != INT_MIN && (distance[v] < distance[u] + w)) 
             {
@@ -39,7 +39,7 @@ int bellmanford2(Graph *monster, int start, int end)
             }
         }
     }
-    displayPredecessor(tv,predecessor);
+    //displayPredecessor(tv,predecessor);
 
     return distance[end];
 }
