@@ -1,7 +1,7 @@
-#include "graph.h"
+#include "raylib.h"
 
 
-int displayLabyrinth()
+int displayLabyrinth1()
 {
     ClearBackground(RAYWHITE);
     DrawRectangle(0, 75, 190, 40,BLACK);
@@ -47,26 +47,3 @@ int displayLabyrinth()
 
     return 0;
 }
-
-
-/*int displayCircle()
-{
-    int test = 0;
-    //DrawCircleV(200, 200,, BLUE);
-    DrawCircle(200,200,150,BLUE);
-    DrawText(TextFormat("%s", test), 195, 175, 30, WHITE);
-    return 0;
-}
-
-
-int displaySommets(int order, ListSuccessor **successors) {
-    for (int i = 0; i < order; i++) {
-        Successor *successor = successors[i]->firstSuccessor;
-        while (successor != NULL) {
-            DrawCircle(10*i, 10*i, 20, BLUE);
-            DrawText(TextFormat("%s", successor->sommet), 9*i, 5*i, 30, WHITE);
-            successor = successor->nextSuccessor;
-        }
-    }
-    return 0;
-}*/
