@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "graph.h"
+#include "edgecoloration.h"
 
 bool isAlreadyAdded(Arc *arc, ListSuccessor *list) {
     Successor *current = list->firstSuccessor;
@@ -59,6 +56,24 @@ ListSuccessor *getAdjacentArcs(ListSuccessor *arcsList, Arc *arc) {
     return adjacentArcsList;
 }
 
+char* getColorFromIntValue(int value) {
+    switch (value) {
+        case 0:
+            return "Red";
+        case 1:
+            return "Green";
+        case 2:
+            return "Blue";
+        case 3:
+            return "Yellow";
+        case 4:
+            return "Purple";
+        default:
+            return "No defined";
+    }
+
+}
+
 int edgeColoration(Graphe *graph, int source) {
     ListSuccessor *arcsList = getOneWayArcsList(graph->arcsList);
     Successor *currentArcList = arcsList->firstSuccessor;
@@ -76,14 +91,10 @@ int edgeColoration(Graphe *graph, int source) {
         ListSuccessor *adjacentArcsList = getAdjacentArcs(arcsList, arc);
         ListSuccessor *usedColorsList = createList();
 
-        //printf("Adjacent arcs of %d -> %d: ---", arc->sommet1 + 1, arc->sommet2 + 1);
-
         Successor *current = adjacentArcsList->firstSuccessor;
 
         while (current != NULL) {
             Arc *currentArc = current->element;
-
-            //  printf("Color of %d -> %d: %d | ", currentArc->sommet1 + 1, currentArc->sommet2 + 1, currentArc->color);
 
             if (currentArc->color != -1) {
                 Successor *colorSuccessor = malloc(sizeof(Successor));
@@ -94,21 +105,19 @@ int edgeColoration(Graphe *graph, int source) {
                 colorSuccessor->nextSuccessor = NULL;
 
                 insertElement(usedColorsList, colorSuccessor);
-                //  printf("Inserted color %d\n", currentArcIndex->color);
             }
 
-            //printf("%d -> %d | ", currentArcList->sommet1 + 1, currentArcList->sommet2 + 1);
             current = current->nextSuccessor;
         }
         int color = 0;
 
+        // 5 beceause we are in a labyrinth (mathematics hypothesis says that max colors used is (max(order(G)) = 4) + 1
         for (int i = 0; i < 5; ++i) {
             Successor *currentArc = usedColorsList->firstSuccessor;
             bool used = false;
 
             while (currentArc != NULL) {
                 int *currentColor = currentArc->element;
-                //  printf("Color: %d\n", currentColor);
 
                 if (*currentColor == i) {
                     used = true;
@@ -129,8 +138,7 @@ int edgeColoration(Graphe *graph, int source) {
         }
         markedArcs++;
         currentArcList = currentArcList->nextSuccessor;
-        //printf("Setted color of %d -> %d: %d\n", arc->sommet1 + 1, arc->sommet2 + 1, color);
-        // printf("Color of %d -> %d: %d\n", arc.sommet1 + 1, arc.sommet2 + 1, arc.color);
+         printf("Color of edge (%d -> %d): %s\n", arc->sommet1 + 1, arc->sommet2 + 1, getColorFromIntValue(arc->color));
     }
     return colorsUsed + 1;
 }

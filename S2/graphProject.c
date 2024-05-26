@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "graph.h"
 #include "dijkstra.h"
+#include "edgecoloration.h"
 
 int **getWeightedAdjency(Graphe *graphe) {
     int **adjacence = malloc(graphe->order * sizeof(int *));
@@ -129,22 +130,21 @@ void resetEdges(Graphe *graph) {
 
 
 int main() {
-    FILE *file = fopen("monsterLevel1.txt", "r");
+    FILE *file = fopen("monsterLevel4.txt", "r");
     Graphe *graphe = lectureGraphe(file);
-    printf("Matrice d'adjacence: \n");
-    //afficheMatrice(graphe);
 
     /*printf("\n Successeurs: \n");
     ListSuccessor **successors = getSuccessorList(graphe);*/
     //afficheSuccessors(graphe->order, successors);
 
-    dijkstraMax(graphe, 0);
+   // dijkstra(graphe, 0);
     //BellmanFord(graphe, 0);
 
-  /*  for (int i = 0; i < graphe->order; ++i) {
+   /* for (int i = 0; i < graphe->order; ++i) {
         resetEdges(graphe);
-        printf("Colors used: %d\n", edgeColoration(graphe, i));
+        printf("Colors used: %d\n", );
     }*/
+    edgeColoration(graphe, 0);
 
     /*printf("\n Successeurs: \n");
     showSuccessors(graphe, adjacence);

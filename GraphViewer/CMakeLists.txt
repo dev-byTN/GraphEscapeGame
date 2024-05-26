@@ -52,6 +52,7 @@ set(ALL_FILES
         ../S2/edgecoloration.c
         ../S2/bellman.c
         ../S2/bellman.c
+        ../S2/edgecoloration.h
 )
 
 

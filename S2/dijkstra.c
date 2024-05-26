@@ -66,6 +66,9 @@ void dijkstra(Graphe* graph, int source) {
         printParentPath(parent, i);
         printf("\n");
     }
+
+    free(distance);
+    free(visited);
 }
 
 void dijkstraMax(Graphe* graph, int source) {
@@ -99,4 +102,6 @@ void dijkstraMax(Graphe* graph, int source) {
         printParentPath(parent, i);
         printf("\n");
     }
+    free(distance);
+    free(visited);
 }
