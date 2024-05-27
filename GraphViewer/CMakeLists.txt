@@ -44,15 +44,7 @@ set(ALL_FILES
     ${Header_Files}
     ${Resource_Files}
     ${Source_Files}
-        ../S2/mainLevel1.c
-        ../S2/graph.h
-        ../S2/graph.h
-        ../S2/graph.c
-        ../S2/dijkstra.c
-        ../S2/edgecoloration.c
-        ../S2/bellman.c
-        ../S2/bellman.c
-        ../S2/edgecoloration.h
+        ../S2/include/bellman.h
 )
 
 

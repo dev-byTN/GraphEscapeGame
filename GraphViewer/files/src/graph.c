@@ -1,11 +1,7 @@
-#include "graph.h"
-
+#include "../include/graph.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-
-
 
 
 Graph* createGraph(typed(json_array)* nodesIdArray, const typed(json_element) jsonContent, const char* fileName)
@@ -26,7 +22,7 @@ Graph* createGraph(typed(json_array)* nodesIdArray, const typed(json_element) js
 		int nameLength = strlen(nodeId.value.as_string);
 		nodeCurrent->id = (char*)malloc(nameLength);
 		strcpy(nodeCurrent->id, nodeId.value.as_string);
-		nodeCurrent->data = i * 10;
+		//nodeCurrent->data = i * 10;
 		nodeCurrent->x = -1;
 		nodeCurrent->y = -1;
 
@@ -152,50 +148,4 @@ void createAdjacentList(Graph* graph,
 			tmp = tmp->next;
 		}
 	}
-}
-
-void saveGraph(Graph* graph)
-{
-	FILE* file = fopen(graph->fileName, "w");
-	if (file == NULL)
-	{
-		fprintf(stderr, "Error opening file %s\n", graph->fileName);
-		return;
-	}
-	fprintf(file, "{");
-	fprintf(file, "\"oriented\":%d,", graph->oriented);
-	//Saves the nodes ids
-	fprintf(file, "\"nodesIds\":[");
-	NodesList* curNodeList = graph->nodes;
-	for (size_t i = 0; i < graph->nodesCount; i++)
-	{
-		Node* curNode = curNodeList->node;
-		fprintf(file, "\"%s\"", curNode->id);
-		curNodeList = curNodeList->next;
-		if (i != graph->nodesCount - 1)
-			fprintf(file, ",");
-	}
-	fprintf(file, "],");
-
-	//Saves each node information	
-	curNodeList = graph->nodes;
-	for (size_t i = 1; i <= graph->nodesCount; i++)
-	{
-		Node* curNode = curNodeList->node;
-		fprintf(file, "\"%s\":{\"x\":%.1f,\"y\":%.1f,\"adjencyList\":[", curNode->id, curNode->x, curNode->y);
-		NodesList* adjencyList = curNode->adjacent;
-		while (adjencyList != NULL && adjencyList->node != NULL)
-		{
-			fprintf(file, "[\"%s\",%d]", adjencyList->node->id, adjencyList->weight);
-			adjencyList = adjencyList->next;
-			if (adjencyList != NULL)
-				fprintf(file, ",");
-		}
-		fprintf(file, "]}");
-		if (i != graph->nodesCount)
-			fprintf(file, ",");
-		curNodeList = curNodeList->next;
-	}
-	fprintf(file, "}");
-	fclose(file);
 }

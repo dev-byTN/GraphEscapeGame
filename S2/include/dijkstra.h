@@ -8,7 +8,7 @@
 
 int minimumDistance(int* distance, bool* visited, int graphSize);
 void printParentPath(int parent[], int i);
-void dijkstra(Graphe* graph, int source);
-void dijkstraMax(Graphe* graph, int source);
+int dijkstra(Graphe* graph, int source, int end);
+int dijkstraMax(Graphe* graph, int source, int end);
 
 #endif

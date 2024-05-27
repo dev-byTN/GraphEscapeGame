@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <limits.h>
-#include "dijkstra.h"
+#include "include/dijkstra.h"
 
 int minimumDistance(int* distance, bool* visited, int graphSize) {
     int min = INT_MAX;
@@ -35,7 +35,7 @@ void printParentPath(int parent[], int i) {
     printParentPath(parent, parent[i]);
     printf("%d ", i + 1);
 }
-void dijkstra(Graphe* graph, int source) {
+int dijkstra(Graphe* graph, int source, int end) {
     int* distance = malloc(graph->order * sizeof(int));
     bool* visited = malloc(graph->order * sizeof(bool));
     int* parent = malloc(graph->order * sizeof(int));
@@ -60,6 +60,7 @@ void dijkstra(Graphe* graph, int source) {
             }
         }
     }
+
     printf("Vertex\t\tDistance\tPath\n");
     for (int i = 1; i < graph->order; i++) {
         printf("%d->%d\t\t%d\t\t%d ", source + 1, i + 1, distance[i], source + 1);
@@ -67,11 +68,15 @@ void dijkstra(Graphe* graph, int source) {
         printf("\n");
     }
 
+    int result = distance[end];
+
     free(distance);
     free(visited);
+
+    return result;
 }
 
-void dijkstraMax(Graphe* graph, int source) {
+int dijkstraMax(Graphe* graph, int source, int end) {
     int* distance = malloc(graph->order * sizeof(int));
     bool* visited = malloc(graph->order * sizeof(bool));
     int* parent = malloc(graph->order * sizeof(int));
@@ -102,6 +107,11 @@ void dijkstraMax(Graphe* graph, int source) {
         printParentPath(parent, i);
         printf("\n");
     }
+
+    int result = distance[end];
+
     free(distance);
     free(visited);
+
+    return result;
 }

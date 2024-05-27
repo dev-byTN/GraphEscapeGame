@@ -28,7 +28,7 @@ const char* read_file(const char* path) {
 typed(json_element) interpretJSon(const char* fileName) {
 	const char* json = read_file(fileName);
 	if (json == NULL) {
-        exit(1);
+		return;
 	}
 
 	result(json_element) element_result = json_parse(json);
@@ -37,7 +37,7 @@ typed(json_element) interpretJSon(const char* fileName) {
 	if (result_is_err(json_element)(&element_result)) {
 		typed(json_error) error = result_unwrap_err(json_element)(&element_result);
 		fprintf(stderr, "Error parsing JSON: %s\n", json_error_to_string(error));
-        exit(1);
+		return;
 	}
 	typed(json_element) element = result_unwrap(json_element)(&element_result);
 
@@ -57,7 +57,7 @@ typed(json_element) getJsonElementFromName(typed(json_element) element, const ch
 	if (result_is_err(json_element)(&result)) {
 		typed(json_error) error = result_unwrap_err(json_element)(&result);
 		fprintf(stderr, "Error getting element \"hello\": %s\n", json_error_to_string(error));
-		return element;
+		return;
 	}
 	typed(json_element) resultUnwrapped = result_unwrap(json_element)(&result);
 	return resultUnwrapped;

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "graph.h"
-#include "dijkstra.h"
-#include "edgecoloration.h"
+#include "include/graph.h"
+#include "include/dijkstra.h"
+#include "include/edgecoloration.h"
 
 int **getWeightedAdjency(Graphe *graphe) {
     int **adjacence = malloc(graphe->order * sizeof(int *));
@@ -30,7 +30,7 @@ int **getWeightedAdjency(Graphe *graphe) {
 
 Graphe *lectureGraphe(FILE *file) {
     if (file == NULL) {
-        printf("Impossible d'ouvrir le fichier graphe.txt\n");
+        printf("Impossible d'ouvrir le fichier\n");
         return NULL;
     }
     int order;
@@ -126,40 +126,4 @@ void resetEdges(Graphe *graph) {
         arc->color = -1;
         currentArcList = currentArcList->nextSuccessor;
     }
-}
-
-
-int main() {
-    FILE *file = fopen("monsterLevel4.txt", "r");
-    Graphe *graphe = lectureGraphe(file);
-
-    /*printf("\n Successeurs: \n");
-    ListSuccessor **successors = getSuccessorList(graphe);*/
-    //afficheSuccessors(graphe->order, successors);
-
-   // dijkstra(graphe, 0);
-    //BellmanFord(graphe, 0);
-
-   /* for (int i = 0; i < graphe->order; ++i) {
-        resetEdges(graphe);
-        printf("Colors used: %d\n", );
-    }*/
-    edgeColoration(graphe, 0);
-
-    /*printf("\n Successeurs: \n");
-    showSuccessors(graphe, adjacence);
-    printf("\n PrÃ©decesseurs: \n");
-    showPredecessors(graphe, adjacence);
-    printf("\n Arcs: \n");
-    showArcs(graphe);
-    printf("\n Nombre de chemins de longueur 2: %d\n", nbchemin2(graphe->order, adjacence));*/
-
-    for (int i = 0; i < graphe->order; ++i) {
-        free(graphe->adjency[i]);
-        //freeList(successors[i]);
-    }
-
-    free(graphe->adjency);
-    free(graphe);
-    return 0;
 }

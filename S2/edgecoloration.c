@@ -1,4 +1,4 @@
-#include "edgecoloration.h"
+#include "include/edgecoloration.h"
 
 bool isAlreadyAdded(Arc *arc, ListSuccessor *list) {
     Successor *current = list->firstSuccessor;

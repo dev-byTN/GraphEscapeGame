@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "graph.h"
+#include "include/graph.h"
+#include "include/bellman.h"
 
 void display(int arr[], int size) {
     int i;
@@ -11,7 +12,7 @@ void display(int arr[], int size) {
     printf("\n");
 }
 
-void BellmanFord(Graphe *graph, int source) {
+int BellmanFord(Graphe *graph, int source, int end) {
     //variables
     int i, j, u, v, w;
 
@@ -65,7 +66,11 @@ void BellmanFord(Graphe *graph, int source) {
         w = graph->arcs[i].weight;
         if (d[u] != INT_MAX && d[v] > d[u] + w) {
             printf("Negative weight cycle detected!\n");
-            return;
+
+            free(d);
+            free(p);
+
+            return -1;
         }
     }
 
@@ -75,4 +80,11 @@ void BellmanFord(Graphe *graph, int source) {
     display(d, tV);
     printf("Predecessor array: ");
     display(p, tV);
+
+    int result = d[end];
+
+    free(d);
+    free(p);
+
+    return result;
 }
