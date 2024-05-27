@@ -45,6 +45,7 @@ set(ALL_FILES
     ${Resource_Files}
     ${Source_Files}
         ../S2/include/bellman.h
+        ../S2/displayLabyrinth2.c
 )
 
 

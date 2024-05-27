@@ -39,17 +39,15 @@ int dijkstra(Graphe* graph, int source, int end) {
     int* distance = malloc(graph->order * sizeof(int));
     bool* visited = malloc(graph->order * sizeof(bool));
     int* parent = malloc(graph->order * sizeof(int));
+    parent[0] = -1;
 
     for (int i = 0; i < graph->order; i++) {
-        parent[0] = -1;
         distance[i] = INT_MAX;
         visited[i] = false;
     }
     distance[source] = 0;
     for (int i = 0; i < graph->order - 1; i++) {
         int U = minimumDistance(distance, visited, graph->order);
-
-        printf("U = %d\n", U);
 
         visited[U] = true;
         for (int j = 0; j < graph->order; j++) {
@@ -69,9 +67,9 @@ int dijkstra(Graphe* graph, int source, int end) {
     }
 
     int result = distance[end];
-
     free(distance);
     free(visited);
+    free(parent);
 
     return result;
 }
@@ -89,8 +87,6 @@ int dijkstraMax(Graphe* graph, int source, int end) {
     distance[source] = 0;
     for (int i = 0; i < graph->order - 1; i++) {
         int U = maximumDistance(distance, visited, graph->order);
-
-        printf("U = %d\n", U);
 
         visited[U] = true;
         for (int j = 0; j < graph->order; j++) {

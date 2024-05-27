@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "include/graph.h"
 #include "include/dijkstra.h"
-#include "include/edgecoloration.h"
+#include "include/edgeColoration.h"
 
 int **getWeightedAdjency(Graphe *graphe) {
     int **adjacence = malloc(graphe->order * sizeof(int *));
@@ -40,7 +40,9 @@ Graphe *lectureGraphe(FILE *file) {
     graphe->order = order;
     graphe->arcs = malloc(graphe->order * graphe->order * sizeof(Arc));
     graphe->arcsList = createList();
+    graphe->nbArcs = 0;
 
+    printf("List created\n");
 
     int *buffer = malloc(3 * sizeof(int));
     int id = 0;
@@ -54,8 +56,13 @@ Graphe *lectureGraphe(FILE *file) {
         arc->color = -1;
         arc->id = id;
 
-
         Successor *arcElement = malloc(sizeof(Successor));
+
+        if (arcElement == NULL) {
+            printf("Error while allocating memory\n");
+            return NULL;
+        }
+
         arcElement->element = arc;
         arcElement->nextSuccessor = NULL;
 
